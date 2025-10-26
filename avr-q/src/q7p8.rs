@@ -55,6 +55,7 @@ macro_rules! q7p8 {
     };
 }
 
+#[allow(clippy::should_implement_trait)]
 impl Q7p8 {
     pub const SHIFT: usize = 8;
 
