@@ -1,0 +1,22 @@
+[package]
+name = "avr-q-test"
+description = "Target hardware unit tests for the avr-q crate"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+avr-device = { version = "0.7", features = [ "atmega328p", "rt" ] }
+avr-q = { path = "../avr-q", features = [ "__internal_test__" ] }
+itoa = "1"
+
+[profile.dev]
+panic = "abort"
+lto = "fat"
+opt-level = "s"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = "fat"
+opt-level = "s"

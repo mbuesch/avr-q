@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+
+[package]
+name = "avr-q"
+description = "Fixed point arithmetic for AVR"
+version = "1.0.0"
+authors = [ "Michael Büsch <m@bues.ch>" ]
+edition = "2024"
+license = "MIT OR Apache-2.0"
+homepage = "https://bues.ch/"
+repository = "https://github.com/mbuesch/avr-q"
+readme = "README.md"
+categories = [ "algorithms", "embedded", "hardware-support", "mathematics", "no-std" ]
+keywords = [ "avr", "fixed-point", "arithmetic", "q-notation" ]
+
+[dependencies]
+#avr-int24 = "1"
+avr-int24 = { git = "https://github.com/mbuesch/avr-int24.git", branch = "main" }
+curveipo = { version = "1", optional = true }
+
+[features]
+default = [ "curveipo" ]
+curveipo = [ "dep:curveipo" ]
+__internal_test__ = []
+
+# vim: ts=4 sw=4 expandtab
