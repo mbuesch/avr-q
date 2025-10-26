@@ -66,17 +66,15 @@ fn test_div(t: &impl TestOps) {
 fn test_neg(t: &impl TestOps) {
     t.begin("neg");
 
-    /*
     let a = q15p8!(const 18000 / 5);
     let b = q15p8!(const -18000 / 5);
     test_assert!(t, -a == b);
-    */
+    test_assert!(t, a.const_neg() == b);
 }
 
 fn test_abs(t: &impl TestOps) {
     t.begin("abs");
 
-    /*
     let a = q15p8!(const 18000 / 5);
     let b = q15p8!(const 18000 / 5);
     test_assert!(t, a.abs() == b);
@@ -86,7 +84,6 @@ fn test_abs(t: &impl TestOps) {
     let b = q15p8!(const 18000 / 5);
     test_assert!(t, a.abs() == b);
     test_assert!(t, a.const_abs() == b);
-    */
 }
 
 pub fn test_q15p8(t: &impl TestOps) {

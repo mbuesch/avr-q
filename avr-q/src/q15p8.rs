@@ -122,9 +122,21 @@ impl Q15p8 {
         Self(Int24::from_i32(c))
     }
 
-    //TODO neg
+    pub fn neg(self) -> Self {
+        Self(-self.0)
+    }
 
-    //TODO abs
+    pub const fn const_neg(self) -> Self {
+        Self(self.0.const_neg())
+    }
+
+    pub fn abs(self) -> Self {
+        Self(self.0.abs())
+    }
+
+    pub const fn const_abs(self) -> Self {
+        Self(self.0.const_abs())
+    }
 }
 
 impl From<u8> for Q15p8 {
@@ -155,7 +167,7 @@ impl core::ops::Add for Q15p8 {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        Q15p8::add(self, other)
+        Self::add(self, other)
     }
 }
 
@@ -169,7 +181,7 @@ impl core::ops::Sub for Q15p8 {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        Q15p8::sub(self, other)
+        Self::sub(self, other)
     }
 }
 
@@ -183,13 +195,21 @@ impl core::ops::Div for Q15p8 {
     type Output = Self;
 
     fn div(self, other: Self) -> Self {
-        Q15p8::div(self, other)
+        Self::div(self, other)
     }
 }
 
 impl core::ops::DivAssign for Q15p8 {
     fn div_assign(&mut self, other: Self) {
         self.0 = (*self / other).0;
+    }
+}
+
+impl core::ops::Neg for Q15p8 {
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        Self::neg(self)
     }
 }
 

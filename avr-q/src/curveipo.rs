@@ -32,7 +32,7 @@ macro_rules! impl_curveipo {
                 }
             }
         }
-    }
+    };
 }
 
 impl_curveipo!(crate::Q7p8, crate::q7p8!(const 0));

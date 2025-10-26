@@ -108,6 +108,16 @@ impl Q7p8 {
         Self(c.to_i16())
     }
 
+    pub const fn const_mul(self, other: Self) -> Self {
+        const {
+            assert!(Self::SHIFT == 8);
+        }
+        let a = Int24::from_i16(self.0);
+        let b = Int24::from_i16(other.0);
+        let c = (a.const_mul(b)).shr8();
+        Self(c.to_i16())
+    }
+
     #[inline(never)]
     pub fn div(self, other: Self) -> Self {
         const {
@@ -166,7 +176,7 @@ impl core::ops::Add for Q7p8 {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        Q7p8::add(self, other)
+        Self::add(self, other)
     }
 }
 
@@ -180,7 +190,7 @@ impl core::ops::Sub for Q7p8 {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        Q7p8::sub(self, other)
+        Self::sub(self, other)
     }
 }
 
@@ -194,7 +204,7 @@ impl core::ops::Mul for Q7p8 {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
-        Q7p8::mul(self, other)
+        Self::mul(self, other)
     }
 }
 
@@ -208,7 +218,7 @@ impl core::ops::Div for Q7p8 {
     type Output = Self;
 
     fn div(self, other: Self) -> Self {
-        Q7p8::div(self, other)
+        Self::div(self, other)
     }
 }
 
@@ -222,7 +232,7 @@ impl core::ops::Neg for Q7p8 {
     type Output = Self;
 
     fn neg(self) -> Self {
-        Q7p8::neg(self)
+        Self::neg(self)
     }
 }
 

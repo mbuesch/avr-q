@@ -47,6 +47,7 @@ fn test_mul(t: &impl TestOps) {
     let b = q7p8!(const 1 / 4);
     let c = q7p8!(const 1 / 8);
     test_assert!(t, a * b == c);
+    test_assert!(t, a.const_mul(b) == c);
 }
 
 fn test_div(t: &impl TestOps) {
