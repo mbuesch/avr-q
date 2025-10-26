@@ -7,6 +7,9 @@
 mod q15p8;
 mod q7p8;
 
+#[cfg(feature = "curveipo")]
+mod curveipo;
+
 #[cfg(any(feature = "__internal_test__", test))]
 pub mod unit_tests;
 
