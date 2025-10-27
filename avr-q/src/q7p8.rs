@@ -196,7 +196,7 @@ impl Q7p8 {
 
 impl From<i8> for Q7p8 {
     fn from(value: i8) -> Self {
-        Self::from_int(value.into())
+        Self::from_int(value)
     }
 }
 
