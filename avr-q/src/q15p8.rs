@@ -82,6 +82,13 @@ impl Q15p8 {
         self.0
     }
 
+    pub const fn to_int(self) -> i16 {
+        const {
+            assert!(Self::SHIFT == 8);
+        }
+        self.0.shr8().to_i16()
+    }
+
     pub const fn to_q7p8(&self) -> crate::Q7p8 {
         crate::Q7p8::from_q(self.0.to_i16())
     }
@@ -154,6 +161,12 @@ impl From<i8> for Q15p8 {
 impl From<i16> for Q15p8 {
     fn from(value: i16) -> Self {
         Self::from_int(value)
+    }
+}
+
+impl From<Q15p8> for i16 {
+    fn from(value: Q15p8) -> Self {
+        value.to_int()
     }
 }
 

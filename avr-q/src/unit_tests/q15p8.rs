@@ -18,7 +18,8 @@ fn test_base(t: &impl TestOps) {
     test_assert!(t, a == 0x000180);
 
     let a: Q15p8 = 9000_i16.into();
-    test_assert!(t, a.to_q().to_i32() == 0x232800);
+    let b: i16 = a.into();
+    test_assert!(t, a.to_q().to_i32() == 0x232800 && b == 9000);
 }
 
 fn test_add(t: &impl TestOps) {

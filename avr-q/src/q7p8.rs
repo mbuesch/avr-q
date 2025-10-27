@@ -79,12 +79,12 @@ impl Q7p8 {
         self.0
     }
 
-    pub const fn to_q15p8(&self) -> crate::Q15p8 {
-        crate::Q15p8::from_q(Int24::from_i16(self.to_q()))
+    pub const fn to_int(self) -> i8 {
+        (self.to_q() >> Self::SHIFT) as i8
     }
 
-    pub const fn to_int(self) -> i16 {
-        self.to_q() >> Self::SHIFT
+    pub const fn to_q15p8(&self) -> crate::Q15p8 {
+        crate::Q15p8::from_q(Int24::from_i16(self.to_q()))
     }
 
     #[inline(never)]
@@ -153,6 +153,12 @@ impl Q7p8 {
 impl From<i8> for Q7p8 {
     fn from(value: i8) -> Self {
         Self::from_int(value.into())
+    }
+}
+
+impl From<Q7p8> for i8 {
+    fn from(value: Q7p8) -> Self {
+        value.to_int()
     }
 }
 
