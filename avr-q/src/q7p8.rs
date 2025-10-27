@@ -141,16 +141,12 @@ impl Q7p8 {
 
     #[inline(never)]
     pub const fn neg(self) -> Self {
-        if self.0 == i16::MIN {
-            Self(i16::MAX)
-        } else {
-            Self(-self.0)
-        }
+        Self(self.0.saturating_neg())
     }
 
     #[inline(never)]
     pub const fn abs(self) -> Self {
-        if self.0 < 0 { self.neg() } else { self }
+        Self(self.0.saturating_abs())
     }
 }
 
