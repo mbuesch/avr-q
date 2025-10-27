@@ -16,7 +16,7 @@ macro_rules! q7p8 {
         const { $crate::Q7p8::const_from_fraction($numerator, $denominator) }
     };
     ($numerator:literal / $denominator:literal) => {
-        $crate::Q7p8::from_fraction($numerator, $denominator)
+        const { $crate::Q7p8::const_from_fraction($numerator, $denominator) }
     };
 
     (const $numerator:literal / $denominator:ident) => {
@@ -44,7 +44,7 @@ macro_rules! q7p8 {
         const { $crate::Q7p8::from_int($numerator) }
     };
     ($numerator:literal) => {
-        $crate::Q7p8::from_int($numerator)
+        const { $crate::Q7p8::from_int($numerator) }
     };
 
     (const $numerator:ident) => {
