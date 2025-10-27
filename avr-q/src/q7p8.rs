@@ -63,8 +63,8 @@ impl Q7p8 {
         Self(q)
     }
 
-    pub const fn from_int(int: i16) -> Self {
-        Self::from_q(int << Self::SHIFT)
+    pub const fn from_int(int: i8) -> Self {
+        Self::from_q((int as i16) << Self::SHIFT)
     }
 
     pub const fn const_from_fraction(numerator: i16, denominator: i16) -> Self {
@@ -147,12 +147,6 @@ impl Q7p8 {
     #[inline(never)]
     pub const fn abs(self) -> Self {
         Self(self.0.saturating_abs())
-    }
-}
-
-impl From<u8> for Q7p8 {
-    fn from(value: u8) -> Self {
-        Self::from_int(value.into())
     }
 }
 

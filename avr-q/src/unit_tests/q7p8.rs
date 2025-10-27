@@ -17,9 +17,8 @@ fn test_base(t: &impl TestOps) {
     let a = q7p8!(const 3 / 2).to_q();
     test_assert!(t, a == 0x0180);
 
-    let a: Q7p8 = 9_u8.into();
-    let b: Q7p8 = 9_i8.into();
-    test_assert!(t, a.to_q() == 0x0900 && a.to_q() == b.to_q());
+    let a: Q7p8 = 9_i8.into();
+    test_assert!(t, a.to_q() == 0x0900);
 }
 
 fn test_add(t: &impl TestOps) {
