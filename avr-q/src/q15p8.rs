@@ -10,6 +10,22 @@ use avr_int24::Int24;
 pub struct Q15p8(Int24);
 
 /// Construct a  Q15.8 fixed point number.
+///
+/// The arguments to this macro can either be a single one.
+/// In this case it is the integer part of the Q15.8 value and the fractional part is zero.
+///
+/// `q15p8!(42)`
+///
+/// Or the arguments can be two, separated by a slash.
+/// In this case the value is a fraction with numerator / denominator.
+///
+/// `q15p8!(42 / 10)`
+///
+/// The arguments can be prefixed with `const` to enforce const evaluation.
+///
+/// `q15p8!(const 42 / 10)`
+///
+/// The arguments can either be literals or identifiers.
 #[macro_export]
 macro_rules! q15p8 {
     (const $numerator:literal / $denominator:literal) => {
@@ -57,12 +73,15 @@ macro_rules! q15p8 {
 
 #[allow(clippy::should_implement_trait)]
 impl Q15p8 {
+    /// Length of the fractional part, in bits.
     pub const SHIFT: usize = 8;
 
+    /// Convert a raw Q15.8 value to [Q15p8].
     pub const fn from_q(q: Int24) -> Self {
         Self(q)
     }
 
+    /// Convert an integer value to [Q15p8] with fractional part being zero.
     pub const fn from_int(int: i16) -> Self {
         const {
             assert!(Self::SHIFT == 8);
@@ -70,18 +89,26 @@ impl Q15p8 {
         Self(Int24::from_i16(int).shl8())
     }
 
-    pub const fn const_from_fraction(numerator: i16, denominator: i16) -> Self {
-        Self(Int24::from_i16(numerator)).const_div(Self(Int24::from_i16(denominator)))
-    }
-
+    /// Convert a numerator/denominator fraction to [Q15p8].
     pub fn from_fraction(numerator: i16, denominator: i16) -> Self {
         Self(Int24::from_i16(numerator)) / Self(Int24::from_i16(denominator))
     }
 
+    /// Convert a numerator/denominator fraction to [Q15p8].
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q15p8::from_fraction] instead.
+    pub const fn const_from_fraction(numerator: i16, denominator: i16) -> Self {
+        Self(Int24::from_i16(numerator)).const_div(Self(Int24::from_i16(denominator)))
+    }
+
+    /// Convert this [Q15p8] to a raw Q15.8 value.
     pub const fn to_q(self) -> Int24 {
         self.0
     }
 
+    /// Extract the integer part out of this [Q15p8].
     pub const fn to_int(self) -> i16 {
         const {
             assert!(Self::SHIFT == 8);
@@ -89,28 +116,42 @@ impl Q15p8 {
         self.0.shr8().to_i16()
     }
 
+    /// Convert this [Q15p8] to a [crate::Q7p8].
     pub const fn to_q7p8(&self) -> crate::Q7p8 {
         crate::Q7p8::from_q(self.0.to_i16())
     }
 
+    /// Add and saturate two [Q15p8] values.
     pub fn add(self, other: Self) -> Self {
         Self(self.0 + other.0)
     }
 
+    /// Add and saturate two [Q15p8] values.
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q15p8::add] instead.
     pub const fn const_add(self, other: Self) -> Self {
         Self(self.0.const_add(other.0))
     }
 
+    /// Subtract and saturate two [Q15p8] values.
     pub fn sub(self, other: Self) -> Self {
         Self(self.0 - other.0)
     }
 
+    /// Subtract and saturate two [Q15p8] values.
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q15p8::sub] instead.
     pub const fn const_sub(self, other: Self) -> Self {
         Self(self.0.const_sub(other.0))
     }
 
     //TODO mul
 
+    /// Divide and saturate two [Q15p8] values.
     pub fn div(self, other: Self) -> Self {
         const {
             assert!(Self::SHIFT == 8);
@@ -118,6 +159,11 @@ impl Q15p8 {
         Self(self.0.shl8div(other.0))
     }
 
+    /// Divide and saturate two [Q15p8] values.
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q15p8::div] instead.
     pub const fn const_div(self, other: Self) -> Self {
         let a = self.0.to_i32();
         let b = other.0.to_i32();
@@ -129,18 +175,30 @@ impl Q15p8 {
         Self(Int24::from_i32(c))
     }
 
+    /// Negate and saturate this [Q15p8] value.
     pub fn neg(self) -> Self {
         Self(-self.0)
     }
 
+    /// Negate and saturate this [Q15p8] value.
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q15p8::neg] instead.
     pub const fn const_neg(self) -> Self {
         Self(self.0.const_neg())
     }
 
+    /// Get the absolute and saturated value of this [Q15p8].
     pub fn abs(self) -> Self {
         Self(self.0.abs())
     }
 
+    /// Get the absolute and saturated value of this [Q15p8].
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q15p8::abs] instead.
     pub const fn const_abs(self) -> Self {
         Self(self.0.const_abs())
     }

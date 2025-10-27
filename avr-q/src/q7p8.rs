@@ -9,7 +9,23 @@ use avr_int24::Int24;
 #[repr(transparent)]
 pub struct Q7p8(i16);
 
-/// Construct a  Q7.8 fixed point number.
+/// Construct a Q7.8 fixed point number.
+///
+/// The arguments to this macro can either be a single one.
+/// In this case it is the integer part of the Q7.8 value and the fractional part is zero.
+///
+/// `q7p8!(42)`
+///
+/// Or the arguments can be two, separated by a slash.
+/// In this case the value is a fraction with numerator / denominator.
+///
+/// `q7p8!(42 / 10)`
+///
+/// The arguments can be prefixed with `const` to enforce const evaluation.
+///
+/// `q7p8!(const 42 / 10)`
+///
+/// The arguments can either be literals or identifiers.
 #[macro_export]
 macro_rules! q7p8 {
     (const $numerator:literal / $denominator:literal) => {
@@ -57,46 +73,61 @@ macro_rules! q7p8 {
 
 #[allow(clippy::should_implement_trait)]
 impl Q7p8 {
+    /// Length of the fractional part, in bits.
     pub const SHIFT: usize = 8;
 
+    /// Convert a raw Q7.8 value to [Q7p8].
     pub const fn from_q(q: i16) -> Self {
         Self(q)
     }
 
+    /// Convert an integer value to [Q7p8] with fractional part being zero.
     pub const fn from_int(int: i8) -> Self {
         Self::from_q((int as i16) << Self::SHIFT)
     }
 
-    pub const fn const_from_fraction(numerator: i16, denominator: i16) -> Self {
-        Self(numerator).const_div(Self(denominator))
-    }
-
+    /// Convert a numerator/denominator fraction to [Q7p8].
     pub fn from_fraction(numerator: i16, denominator: i16) -> Self {
         Self(numerator) / Self(denominator)
     }
 
+    /// Convert a numerator/denominator fraction to [Q7p8].
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q7p8::from_fraction] instead.
+    pub const fn const_from_fraction(numerator: i16, denominator: i16) -> Self {
+        Self(numerator).const_div(Self(denominator))
+    }
+
+    /// Convert this [Q7p8] to a raw Q7.8 value.
     pub const fn to_q(self) -> i16 {
         self.0
     }
 
+    /// Extract the integer part out of this [Q7p8].
     pub const fn to_int(self) -> i8 {
         (self.to_q() >> Self::SHIFT) as i8
     }
 
+    /// Convert this [Q7p8] to a [crate::Q15p8].
     pub const fn to_q15p8(&self) -> crate::Q15p8 {
         crate::Q15p8::from_q(Int24::from_i16(self.to_q()))
     }
 
+    /// Add and saturate two [Q7p8] values.
     #[inline(never)]
     pub const fn add(self, other: Self) -> Self {
         Self(self.0.saturating_add(other.0))
     }
 
+    /// Subtract and saturate two [Q7p8] values.
     #[inline(never)]
     pub const fn sub(self, other: Self) -> Self {
         Self(self.0.saturating_sub(other.0))
     }
 
+    /// Multiply and saturate two [Q7p8] values.
     #[inline(never)]
     pub fn mul(self, other: Self) -> Self {
         const {
@@ -108,6 +139,11 @@ impl Q7p8 {
         Self(c.to_i16())
     }
 
+    /// Multiply and saturate two [Q7p8] values.
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q7p8::mul] instead.
     pub const fn const_mul(self, other: Self) -> Self {
         const {
             assert!(Self::SHIFT == 8);
@@ -118,6 +154,7 @@ impl Q7p8 {
         Self(c.to_i16())
     }
 
+    /// Divide and saturate two [Q7p8] values.
     #[inline(never)]
     pub fn div(self, other: Self) -> Self {
         const {
@@ -129,6 +166,11 @@ impl Q7p8 {
         Self(c.to_i16())
     }
 
+    /// Divide and saturate two [Q7p8] values.
+    /// Const variant.
+    ///
+    /// Only call this function from const context.
+    /// From non-const context use the optimized variant [Q7p8::div] instead.
     pub const fn const_div(self, other: Self) -> Self {
         const {
             assert!(Self::SHIFT == 8);
@@ -139,11 +181,13 @@ impl Q7p8 {
         Self(c.to_i16())
     }
 
+    /// Negate and saturate this [Q7p8] value.
     #[inline(never)]
     pub const fn neg(self) -> Self {
         Self(self.0.saturating_neg())
     }
 
+    /// Get the absolute and saturated value of this [Q7p8].
     #[inline(never)]
     pub const fn abs(self) -> Self {
         Self(self.0.saturating_abs())
