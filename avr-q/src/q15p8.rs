@@ -5,7 +5,7 @@
 use avr_int24::Int24;
 
 /// Q15.8 fixed point number.
-#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
 #[repr(transparent)]
 pub struct Q15p8(Int24);
 
