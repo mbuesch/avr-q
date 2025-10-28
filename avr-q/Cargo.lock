@@ -5,7 +5,7 @@ version = 4
 [[package]]
 name = "avr-int24"
 version = "1.0.0"
-source = "git+https://github.com/mbuesch/avr-int24.git?branch=main#633b1bba1b40ede0fb23aec829f7a90650701071"
+source = "git+https://github.com/mbuesch/avr-int24.git?branch=main#aab0891de6a4bf5e5f9ecb0b8d1a53a1cee2c7a0"
 
 [[package]]
 name = "avr-q"
