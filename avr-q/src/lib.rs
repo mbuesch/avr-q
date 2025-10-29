@@ -69,7 +69,7 @@
 //! ## Crate features
 //!
 //! - `curveipo` (enabled by default):
-//!   The curveipo feature enables the implementations of all traits from the
+//!   The `curveipo` feature enables the implementations of all traits from the
 //!   [curveipo crate](https://crates.io/crates/curveipo)
 //!   for all fixed-point types.
 //!   The `curveipo` crate provides 2D curve interpolation support.

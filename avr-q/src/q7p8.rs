@@ -11,21 +11,21 @@ pub struct Q7p8(i16);
 
 /// Construct a Q7.8 fixed point number.
 ///
-/// The arguments to this macro can either be a single one.
+/// The argument to this macro can be a single one.
 /// In this case it is the integer part of the Q7.8 value and the fractional part is zero.
 ///
 /// `q7p8!(42)`
 ///
-/// Or the arguments can be two, separated by a slash.
-/// In this case the value is a fraction with numerator / denominator.
+/// Or the arguments can be two numbers, separated by a slash.
+/// In this case the value is a fraction with a numerator and a denominator.
 ///
 /// `q7p8!(42 / 10)`
 ///
-/// The arguments can be prefixed with `const` to enforce const evaluation.
+/// The arguments can be prefixed with `const` to enforce `const` evaluation.
 ///
 /// `q7p8!(const 42 / 10)`
 ///
-/// The arguments can either be literals or identifiers.
+/// The arguments can be either literals or identifiers.
 #[macro_export]
 macro_rules! q7p8 {
     (const $numerator:literal / $denominator:literal) => {
