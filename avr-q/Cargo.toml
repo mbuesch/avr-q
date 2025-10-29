@@ -14,8 +14,8 @@ categories = [ "algorithms", "embedded", "hardware-support", "mathematics", "no-
 keywords = [ "avr", "fixed-point", "arithmetic", "q-notation" ]
 
 [dependencies]
-#avr-int24 = "1"
-avr-int24 = { git = "https://github.com/mbuesch/avr-int24.git", branch = "main" }
+avr-int24 = "1"
+#avr-int24 = { git = "https://github.com/mbuesch/avr-int24.git", branch = "main" }
 curveipo = { version = "1", optional = true }
 
 [features]

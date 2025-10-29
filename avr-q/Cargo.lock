@@ -4,8 +4,9 @@ version = 4
 
 [[package]]
 name = "avr-int24"
-version = "1.0.0"
-source = "git+https://github.com/mbuesch/avr-int24.git?branch=main#aab0891de6a4bf5e5f9ecb0b8d1a53a1cee2c7a0"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "145b1e799c70d1303e5a51d8c2d7b94e80f19e4162c95adf05eccdfcd66cc342"
 
 [[package]]
 name = "avr-q"
