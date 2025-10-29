@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 // Copyright (C) 2025 Michael Büsch <m@bues.ch>
 
-use avr_int24::Int24;
+use avr_int24::I24;
 
 /// Q15.8 fixed point number.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
 #[repr(transparent)]
-pub struct Q15p8(Int24);
+pub struct Q15p8(I24);
 
 /// Construct a Q15.8 fixed point number.
 ///
@@ -77,7 +77,7 @@ impl Q15p8 {
     pub const SHIFT: usize = 8;
 
     /// Convert a raw Q15.8 value to [Q15p8].
-    pub const fn from_q(q: Int24) -> Self {
+    pub const fn from_q(q: I24) -> Self {
         Self(q)
     }
 
@@ -86,12 +86,12 @@ impl Q15p8 {
         const {
             assert!(Self::SHIFT == 8);
         }
-        Self(Int24::from_i16(int).shl8())
+        Self(I24::from_i16(int).shl8())
     }
 
     /// Convert a numerator/denominator fraction to [Q15p8].
     pub fn from_fraction(numerator: i16, denominator: i16) -> Self {
-        Self(Int24::from_i16(numerator)) / Self(Int24::from_i16(denominator))
+        Self(I24::from_i16(numerator)) / Self(I24::from_i16(denominator))
     }
 
     /// Convert a numerator/denominator fraction to [Q15p8].
@@ -100,11 +100,11 @@ impl Q15p8 {
     /// Only call this function from const context.
     /// From non-const context use the optimized variant [Q15p8::from_fraction] instead.
     pub const fn const_from_fraction(numerator: i16, denominator: i16) -> Self {
-        Self(Int24::from_i16(numerator)).const_div(Self(Int24::from_i16(denominator)))
+        Self(I24::from_i16(numerator)).const_div(Self(I24::from_i16(denominator)))
     }
 
     /// Convert this [Q15p8] to a raw Q15.8 value.
-    pub const fn to_q(self) -> Int24 {
+    pub const fn to_q(self) -> I24 {
         self.0
     }
 
@@ -172,7 +172,7 @@ impl Q15p8 {
         } else {
             (a << Self::SHIFT).saturating_div(b)
         };
-        Self(Int24::from_i32(c))
+        Self(I24::from_i32(c))
     }
 
     /// Negate and saturate this [Q15p8] value.

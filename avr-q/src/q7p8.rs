@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 // Copyright (C) 2025 Michael Büsch <m@bues.ch>
 
-use avr_int24::Int24;
+use avr_int24::I24;
 
 /// Q7.8 fixed point number.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
@@ -112,7 +112,7 @@ impl Q7p8 {
 
     /// Convert this [Q7p8] to a [crate::Q15p8].
     pub const fn to_q15p8(&self) -> crate::Q15p8 {
-        crate::Q15p8::from_q(Int24::from_i16(self.to_q()))
+        crate::Q15p8::from_q(I24::from_i16(self.to_q()))
     }
 
     /// Add and saturate two [Q7p8] values.
@@ -133,8 +133,8 @@ impl Q7p8 {
         const {
             assert!(Self::SHIFT == 8);
         }
-        let a = Int24::from_i16(self.0);
-        let b = Int24::from_i16(other.0);
+        let a = I24::from_i16(self.0);
+        let b = I24::from_i16(other.0);
         let c = (a * b).shr8();
         Self(c.to_i16())
     }
@@ -148,8 +148,8 @@ impl Q7p8 {
         const {
             assert!(Self::SHIFT == 8);
         }
-        let a = Int24::from_i16(self.0);
-        let b = Int24::from_i16(other.0);
+        let a = I24::from_i16(self.0);
+        let b = I24::from_i16(other.0);
         let c = (a.const_mul(b)).shr8();
         Self(c.to_i16())
     }
@@ -160,8 +160,8 @@ impl Q7p8 {
         const {
             assert!(Self::SHIFT == 8);
         }
-        let a = Int24::from_i16(self.0);
-        let b = Int24::from_i16(other.0);
+        let a = I24::from_i16(self.0);
+        let b = I24::from_i16(other.0);
         let c = a.shl8() / b;
         Self(c.to_i16())
     }
@@ -175,8 +175,8 @@ impl Q7p8 {
         const {
             assert!(Self::SHIFT == 8);
         }
-        let a = Int24::from_i16(self.0);
-        let b = Int24::from_i16(other.0);
+        let a = I24::from_i16(self.0);
+        let b = I24::from_i16(other.0);
         let c = a.shl8().const_div(b);
         Self(c.to_i16())
     }
