@@ -19,7 +19,7 @@ avr-int24 = { git = "https://github.com/mbuesch/avr-int24.git", branch = "main" 
 curveipo = { version = "1", optional = true }
 
 [features]
-default = [ "curveipo" ]
+default = []
 curveipo = [ "dep:curveipo" ]
 __internal_test__ = []
 

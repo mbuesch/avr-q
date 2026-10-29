@@ -14,7 +14,12 @@ for AVR microcontrollers.
 - Basic arithmetic operations: addition, subtraction, multiplication, and division.
 - Macros for easy construction of fixed-point numbers from integers or fractions.
 - Conversions between fixed-point types and integer types.
-- Optional `curveipo` feature for curve interpolation.
+- Optional `curveipo` feature for curve interpolation. (feature disabled by default)
+
+### Currently **not** implemented are
+
+- Multiplication for Q15.8.
+- `curveipo` for Q15.8.
 
 ## Usage
 
@@ -23,6 +28,13 @@ Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
 avr-q = "2"
+```
+
+If you need `curveipo`, enable it with:
+
+```toml
+[dependencies]
+avr-q = { version = "2", features = [ "curveipo" ] }
 ```
 
 ## Examples
