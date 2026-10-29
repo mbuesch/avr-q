@@ -4,6 +4,12 @@
 
 use super::{TestOps, test_assert};
 use crate::{Q15p8, q15p8};
+use avr_int24::is24;
+
+const MIN: Q15p8 = Q15p8::from_q(is24::from_i32(-0x800000));
+const MAX: Q15p8 = Q15p8::from_q(is24::from_i32(0x7fffff));
+const ZERO: Q15p8 = Q15p8::from_q(is24::from_i32(0));
+const ONE_LSB: Q15p8 = Q15p8::from_q(is24::from_i32(1));
 
 fn test_base(t: &impl TestOps) {
     t.begin("base");
@@ -20,6 +26,22 @@ fn test_base(t: &impl TestOps) {
     let a: Q15p8 = 9000_i16.into();
     let b: i16 = a.to_int();
     test_assert!(t, a.to_q().to_i32() == 0x232800 && b == 9000);
+
+    let num = 7_i16;
+    let den = 3_i16;
+    test_assert!(t, q15p8!(num / den) == q15p8!(const 7 / 3));
+    test_assert!(t, Q15p8::from_fraction(num, den) == q15p8!(const 7 / 3));
+
+    let min16: Q15p8 = i16::MIN.into();
+    let max16: Q15p8 = i16::MAX.into();
+    test_assert!(
+        t,
+        min16.to_q().to_i32() == -0x800000 && min16.to_int() == i16::MIN
+    );
+    test_assert!(
+        t,
+        max16.to_q().to_i32() == 0x7fff00 && max16.to_int() == i16::MAX
+    );
 }
 
 fn test_add(t: &impl TestOps) {
@@ -87,6 +109,31 @@ fn test_abs(t: &impl TestOps) {
     test_assert!(t, a.const_abs() == b);
 }
 
+fn test_boundaries(t: &impl TestOps) {
+    t.begin("boundaries");
+
+    test_assert!(t, MAX + ONE_LSB == MAX);
+    test_assert!(t, MAX.const_add(ONE_LSB) == MAX);
+    test_assert!(t, MIN - ONE_LSB == MIN);
+    test_assert!(t, MIN.const_sub(ONE_LSB) == MIN);
+
+    test_assert!(t, -MIN == MAX);
+    test_assert!(t, MIN.const_neg() == MAX);
+    test_assert!(t, MIN.abs() == MAX);
+    test_assert!(t, MIN.const_abs() == MAX);
+
+    test_assert!(t, MAX / ONE_LSB == MAX);
+    test_assert!(t, MAX.const_div(ONE_LSB) == MAX);
+    test_assert!(t, MIN / ONE_LSB == MIN);
+    test_assert!(t, MIN.const_div(ONE_LSB) == MIN);
+    test_assert!(t, MAX / ZERO == MAX);
+    test_assert!(t, MAX.const_div(ZERO) == MAX);
+    test_assert!(t, MIN / ZERO == MIN);
+    test_assert!(t, MIN.const_div(ZERO) == MIN);
+    test_assert!(t, ZERO / ZERO == MAX);
+    test_assert!(t, ZERO.const_div(ZERO) == MAX);
+}
+
 pub fn test_q15p8(t: &impl TestOps) {
     t.print("q15p8\n");
     test_base(t);
@@ -96,6 +143,7 @@ pub fn test_q15p8(t: &impl TestOps) {
     test_div(t);
     test_neg(t);
     test_abs(t);
+    test_boundaries(t);
 }
 
 // vim: ts=4 sw=4 expandtab
