@@ -18,7 +18,7 @@
 //! - Basic arithmetic operations: addition, subtraction, multiplication, and division.
 //! - Macros for easy construction of fixed-point numbers from integers or fractions.
 //! - Conversions between fixed-point types and integer types.
-//! - Optional `curveipo` feature for curve interpolation.
+//! - Optional `curveipo` feature for curve interpolation. (feature disabled by default)
 //!
 //! ## Creating fixed-point numbers
 //!
@@ -68,7 +68,7 @@
 //!
 //! ## Crate features
 //!
-//! - `curveipo` (enabled by default):
+//! - `curveipo` (disabled by default):
 //!   The `curveipo` feature enables the implementations of all traits from the
 //!   [curveipo crate](https://crates.io/crates/curveipo)
 //!   for all fixed-point types.
