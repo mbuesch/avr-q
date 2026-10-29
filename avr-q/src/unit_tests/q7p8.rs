@@ -18,7 +18,7 @@ fn test_base(t: &impl TestOps) {
     test_assert!(t, a == 0x0180);
 
     let a: Q7p8 = 9_i8.into();
-    let b: i8 = a.into();
+    let b: i8 = a.to_int();
     test_assert!(t, a.to_q() == 0x0900 && b == 9);
 }
 

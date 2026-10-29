@@ -222,12 +222,6 @@ impl From<i16> for Q15p8 {
     }
 }
 
-impl From<Q15p8> for i16 {
-    fn from(value: Q15p8) -> Self {
-        value.to_int()
-    }
-}
-
 impl From<crate::Q7p8> for Q15p8 {
     fn from(v: crate::Q7p8) -> Q15p8 {
         v.to_q15p8()

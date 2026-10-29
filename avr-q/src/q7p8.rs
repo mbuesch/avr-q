@@ -200,18 +200,6 @@ impl From<i8> for Q7p8 {
     }
 }
 
-impl From<Q7p8> for i8 {
-    fn from(value: Q7p8) -> Self {
-        value.to_int()
-    }
-}
-
-impl From<crate::Q15p8> for Q7p8 {
-    fn from(v: crate::Q15p8) -> Q7p8 {
-        v.to_q7p8()
-    }
-}
-
 impl core::ops::Add for Q7p8 {
     type Output = Self;
 
