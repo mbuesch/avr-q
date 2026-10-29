@@ -62,11 +62,11 @@ This is a shortened example output:
 
 ```
 Begin tests
-Begin: conv_i16
-line 25: Ok
-line 29: Ok
-line 33: Ok
-line 37: Ok
+q7p8
+Begin: base
+line 15: Ok
+line 18: Ok
+line 22: Ok
   <snip>
 Done!
 ```
