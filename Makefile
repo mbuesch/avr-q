@@ -1,4 +1,4 @@
-.PHONY: all clean dasm isp isp-fuses isp-flash dw dw-flash
+.PHONY: all clean dasm isp isp-fuses isp-flash dw dw-flash doc
 
 all:
 	$(MAKE) -C avr-q test
@@ -27,3 +27,6 @@ dw:
 dw-flash:
 	$(MAKE) -C avr-q test
 	$(MAKE) -C avr-q-test dw-flash
+
+doc:
+	$(MAKE) -C avr-q doc
