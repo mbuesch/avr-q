@@ -10,7 +10,7 @@ checksum = "145b1e799c70d1303e5a51d8c2d7b94e80f19e4162c95adf05eccdfcd66cc342"
 
 [[package]]
 name = "avr-q"
-version = "1.0.0"
+version = "2.0.0"
 dependencies = [
  "avr-int24",
  "curveipo",

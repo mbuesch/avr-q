@@ -22,7 +22,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-avr-q = "1"
+avr-q = "2"
 ```
 
 ## Examples
