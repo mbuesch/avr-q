@@ -11,7 +11,7 @@ checksum = "f2032f911046de80f0a198e0901378627c33f59ea0ac00e363d481118bd70a53"
 [[package]]
 name = "avr-int24"
 version = "2.0.0"
-source = "git+https://github.com/mbuesch/avr-int24.git?branch=main#1cd2df53d49a3197540c45fdcf0b9a907ab01cb8"
+source = "git+https://github.com/mbuesch/avr-int24.git?branch=main#9a2319268ddf27ef399ee86546a3a5d6833adc58"
 
 [[package]]
 name = "avr-q"

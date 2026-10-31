@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 // Copyright (C) 2025 Michael Büsch <m@bues.ch>
 
+#[cfg(feature = "curveipo")]
+mod curveipo;
 mod q15p8;
 mod q7p8;
 
@@ -23,6 +25,8 @@ pub fn run_tests(t: &impl TestOps) {
     t.print("\n\nBegin tests\n");
     q7p8::test_q7p8(t);
     q15p8::test_q15p8(t);
+    #[cfg(feature = "curveipo")]
+    curveipo::test_curveipo(t);
     t.print("Done!\n");
 }
 

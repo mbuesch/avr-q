@@ -76,6 +76,15 @@ impl Q7p8 {
     /// Length of the fractional part, in bits.
     pub const SHIFT: usize = 8;
 
+    /// Maximum representable value of [Q7p8].
+    pub const MAX: Self = Self(i16::MAX);
+    /// Minimum representable value of [Q7p8].
+    pub const MIN: Self = Self(i16::MIN);
+    /// Zero value of [Q7p8].
+    pub const ZERO: Self = Self::from_int(0);
+    /// One value of [Q7p8].
+    pub const ONE: Self = Self::from_int(1);
+
     /// Convert a raw Q7.8 value to [Q7p8].
     pub const fn from_q(q: i16) -> Self {
         Self(q)

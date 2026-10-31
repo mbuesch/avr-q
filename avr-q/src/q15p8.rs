@@ -76,6 +76,15 @@ impl Q15p8 {
     /// Length of the fractional part, in bits.
     pub const SHIFT: usize = 8;
 
+    /// Maximum representable value of [Q15p8].
+    pub const MAX: Self = Self(is24::MAX);
+    /// Minimum representable value of [Q15p8].
+    pub const MIN: Self = Self(is24::MIN);
+    /// Zero value of [Q15p8].
+    pub const ZERO: Self = Self::from_int(0);
+    /// One value of [Q15p8].
+    pub const ONE: Self = Self::from_int(1);
+
     /// Convert a raw Q15.8 value to [Q15p8].
     pub const fn from_q(q: is24) -> Self {
         Self(q)
