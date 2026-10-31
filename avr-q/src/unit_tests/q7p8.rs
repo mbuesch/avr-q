@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 // Copyright (C) 2025 Michael Büsch <m@bues.ch>
 
+#![allow(clippy::eq_op)]
+
 use super::{TestOps, test_assert};
 use crate::{Q7p8, q7p8};
 
